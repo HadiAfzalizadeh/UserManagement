@@ -17,6 +17,7 @@ import {
 } from '@material-tailwind/react';
 import { PencilIcon, TrashIcon } from '@heroicons/react/24/solid';
 import { useSelector, useDispatch } from 'react-redux';
+import UserService from './../userService';
 
 function UsersGrid() {
   const TABLE_HEAD = [
@@ -29,7 +30,7 @@ function UsersGrid() {
   ];
 
   const TABLE_ROWS = useSelector((state) => state.users);
-
+  let dispatch = useDispatch();
   return (
     <Card className="h-full w-full">
       <CardHeader floated={false} shadow={false} className="rounded-none">
@@ -52,14 +53,6 @@ function UsersGrid() {
             <Button className="flex items-center gap-3" size="sm">
               <ArrowDownTrayIcon strokeWidth={2} className="h-4 w-4" /> Download
             </Button>
-          </div>
-        </div>
-
-        <div class="md:col-span-5 text-right">
-          <div class="inline-flex items-end">
-            <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-              جدید
-            </button>
           </div>
         </div>
       </CardHeader>
@@ -94,12 +87,31 @@ function UsersGrid() {
                 <tr key={name}>
                   <td className={classes}>
                     <Tooltip content="Edit User">
-                      <IconButton variant="text">
+                      <IconButton
+                        onClick={async () => {
+                          let action = {
+                            type: 'loadEdit',
+                            data: await UserService.getUserByID(id),
+                          };
+                          dispatch(action);
+                        }}
+                        variant="text"
+                      >
                         <PencilIcon className="h-4 w-4 m-1" />
                       </IconButton>
                     </Tooltip>
                     <Tooltip content="Delete User">
-                      <IconButton variant="text">
+                      <IconButton
+                        onClick={async () => {
+                          await UserService.deleteUser(id);
+                          let action = {
+                            type: 'delete',
+                            data: await UserService.getUsers(),
+                          };
+                          dispatch(action);
+                        }}
+                        variant="text"
+                      >
                         <TrashIcon className="h-4 w-4 m-1" />
                       </IconButton>
                     </Tooltip>
@@ -156,10 +168,28 @@ function UsersGrid() {
         </table>
       </CardBody>
       <CardFooter className="flex items-center justify-between border-t border-blue-gray-50 p-4">
+        <div class="md:col-span-5 text-right">
+          <div class="inline-flex items-end">
+            <button
+              onClick={async () => {
+                let action = {
+                  type: 'loadAdd',
+                };
+                dispatch(action);
+              }}
+              class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+            >
+              جدید
+            </button>
+          </div>
+        </div>
         <Button variant="outlined" size="sm">
           Previous
         </Button>
         <div className="flex items-center gap-2">
+          <IconButton variant="text" size="sm">
+            ...
+          </IconButton>
           <IconButton variant="outlined" size="sm">
             1
           </IconButton>
@@ -170,16 +200,16 @@ function UsersGrid() {
             3
           </IconButton>
           <IconButton variant="text" size="sm">
+            4
+          </IconButton>
+          <IconButton variant="text" size="sm">
+            5
+          </IconButton>
+          <IconButton variant="text" size="sm">
+            6
+          </IconButton>
+          <IconButton variant="text" size="sm">
             ...
-          </IconButton>
-          <IconButton variant="text" size="sm">
-            8
-          </IconButton>
-          <IconButton variant="text" size="sm">
-            9
-          </IconButton>
-          <IconButton variant="text" size="sm">
-            10
           </IconButton>
         </div>
         <Button variant="outlined" size="sm">

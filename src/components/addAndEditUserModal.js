@@ -29,25 +29,29 @@ const addUserSchema = Yup.object().shape({
 
 function AddAndEditUserModal() {
   let dispatch = useDispatch();
+  const addEditType = useSelector((state) => state.addEditType);
   return (
     <>
       <Formik
-        initialValues={{
-          id: null,
-          name: '',
-          surname: '',
-          melicode: '',
-          username: '',
-          email: '',
-        }}
+        enableReinitialize={true}
+        initialValues={useSelector((state) => state.editableUser)}
         validationSchema={addUserSchema}
         onSubmit={async (values) => {
-          await UserService.addUser(values);
-          let action = {
-            type: 'add',
-            data: await UserService.getUsers(),
-          };
-          dispatch(action);
+          if (addEditType === 'add') {
+            await UserService.addUser(values);
+            let action = {
+              type: 'add',
+              data: await UserService.getUsers(),
+            };
+            dispatch(action);
+          } else {
+            await UserService.editUser(values);
+            let action = {
+              type: 'edit',
+              data: await UserService.getUsers(),
+            };
+            dispatch(action);
+          }
         }}
       >
         {({ isSubmitting }) => (
@@ -88,6 +92,7 @@ function AddAndEditUserModal() {
                           <Field
                             type="number"
                             name="id"
+                            disabled={addEditType === 'add' ? false : true}
                             class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
                           />
                           <ErrorMessage name="id" component="div" />
