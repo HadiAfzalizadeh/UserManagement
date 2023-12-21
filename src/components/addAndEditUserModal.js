@@ -1,5 +1,7 @@
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
+import { useSelector, useDispatch } from 'react-redux';
+import UserService from './../userService';
 
 const addUserSchema = Yup.object().shape({
   name: Yup.string().required('نام اجباری است'),
@@ -7,7 +9,7 @@ const addUserSchema = Yup.object().shape({
   email: Yup.string()
     .email('آدرس ایمیل نادرست است')
     .required('آدرس ایمیل اجباری است'),
-  melicode: Yup.string()
+  id: Yup.string()
     .matches(/^(?!(\d)\1{9})\d{10}$/, 'کدملی صحیح نیست')
     .required('کد ملی اجباری است'),
   username: Yup.string()
@@ -26,10 +28,12 @@ const addUserSchema = Yup.object().shape({
 });
 
 function AddAndEditUserModal() {
+  let dispatch = useDispatch();
   return (
     <>
       <Formik
         initialValues={{
+          id: null,
           name: '',
           surname: '',
           melicode: '',
@@ -37,11 +41,13 @@ function AddAndEditUserModal() {
           email: '',
         }}
         validationSchema={addUserSchema}
-        onSubmit={(values, { setSubmitting }) => {
-          setTimeout(() => {
-            alert(JSON.stringify(values, null, 2));
-            setSubmitting(false);
-          }, 400);
+        onSubmit={async (values) => {
+          await UserService.addUser(values);
+          let action = {
+            type: 'add',
+            data: await UserService.getUsers(),
+          };
+          dispatch(action);
         }}
       >
         {({ isSubmitting }) => (
@@ -63,7 +69,6 @@ function AddAndEditUserModal() {
                             type="text"
                             name="name"
                             class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
-                            // value=""
                           />
                           <ErrorMessage name="name" component="div" />
                         </div>
@@ -74,20 +79,18 @@ function AddAndEditUserModal() {
                             type="text"
                             name="surname"
                             class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
-                            // value="fdsfd"
                           />
                           <ErrorMessage name="surname" component="div" />
                         </div>
 
                         <div class="md:col-span-5">
-                          <label for="melicode">کد ملی</label>
+                          <label for="id">کد ملی</label>
                           <Field
                             type="number"
-                            name="melicode"
+                            name="id"
                             class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
-                            // value=""
                           />
-                          <ErrorMessage name="melicode" component="div" />
+                          <ErrorMessage name="id" component="div" />
                         </div>
 
                         <div class="md:col-span-5">
@@ -96,7 +99,6 @@ function AddAndEditUserModal() {
                             type="email"
                             name="email"
                             class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
-                            // value=""
                             placeholder="email@domain.com"
                           />
                           <ErrorMessage name="email" component="div" />
@@ -109,7 +111,6 @@ function AddAndEditUserModal() {
                             name="username"
                             id="username"
                             class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
-                            // value=""
                           />
                           <ErrorMessage name="username" component="div" />
                         </div>
@@ -120,7 +121,6 @@ function AddAndEditUserModal() {
                             type="password"
                             name="password"
                             class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
-                            // value=""
                           />
                           <ErrorMessage name="password" component="div" />
                         </div>
@@ -131,7 +131,6 @@ function AddAndEditUserModal() {
                             type="password"
                             name="repeatPassword"
                             class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
-                            // value=""
                           />
                           <ErrorMessage name="repeatPassword" component="div" />
                         </div>
@@ -141,7 +140,11 @@ function AddAndEditUserModal() {
                             <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
                               انصراف
                             </button>
-                            <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                            <button
+                              type="submit"
+                              disabled={isSubmitting}
+                              class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                            >
                               تایید
                             </button>
                           </div>

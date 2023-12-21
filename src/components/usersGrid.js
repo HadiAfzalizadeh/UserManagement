@@ -16,6 +16,7 @@ import {
   Input,
 } from '@material-tailwind/react';
 import { PencilIcon, TrashIcon } from '@heroicons/react/24/solid';
+import { useSelector, useDispatch } from 'react-redux';
 
 function UsersGrid() {
   const TABLE_HEAD = [
@@ -27,15 +28,7 @@ function UsersGrid() {
     'نام',
   ];
 
-  const TABLE_ROWS = [
-    {
-      name: 'namefdf',
-      surname: 'surnamefdff',
-      melicode: 'melicode1212',
-      username: 'usernamesddfss',
-      email: 'emailfdf',
-    },
-  ];
+  const TABLE_ROWS = useSelector((state) => state.users);
 
   return (
     <Card className="h-full w-full">
@@ -91,76 +84,74 @@ function UsersGrid() {
             </tr>
           </thead>
           <tbody>
-            {TABLE_ROWS.map(
-              ({ name, surname, melicode, username, email }, index) => {
-                const isLast = index === TABLE_ROWS.length - 1;
-                const classes = isLast
-                  ? 'p-4'
-                  : 'p-4 border-b border-blue-gray-50';
+            {TABLE_ROWS.map(({ name, surname, id, username, email }, index) => {
+              const isLast = index === TABLE_ROWS.length - 1;
+              const classes = isLast
+                ? 'p-4'
+                : 'p-4 border-b border-blue-gray-50';
 
-                return (
-                  <tr key={name}>
-                    <td className={classes}>
-                      <Tooltip content="Edit User">
-                        <IconButton variant="text">
-                          <PencilIcon className="h-4 w-4 m-1" />
-                        </IconButton>
-                      </Tooltip>
-                      <Tooltip content="Delete User">
-                        <IconButton variant="text">
-                          <TrashIcon className="h-4 w-4 m-1" />
-                        </IconButton>
-                      </Tooltip>
-                    </td>
-                    <td className={classes}>
-                      <Typography
-                        variant="small"
-                        color="blue-gray"
-                        className="font-normal"
-                      >
-                        {username}
-                      </Typography>
-                    </td>
-                    <td className={classes}>
-                      <Typography
-                        variant="small"
-                        color="blue-gray"
-                        className="font-normal"
-                      >
-                        {email}
-                      </Typography>
-                    </td>
-                    <td className={classes}>
-                      <Typography
-                        variant="small"
-                        color="blue-gray"
-                        className="font-normal"
-                      >
-                        {melicode}
-                      </Typography>
-                    </td>
-                    <td className={classes}>
-                      <Typography
-                        variant="small"
-                        color="blue-gray"
-                        className="font-normal"
-                      >
-                        {surname}
-                      </Typography>
-                    </td>
-                    <td className={classes}>
-                      <Typography
-                        variant="small"
-                        color="blue-gray"
-                        className="font-normal"
-                      >
-                        {name}
-                      </Typography>
-                    </td>
-                  </tr>
-                );
-              }
-            )}
+              return (
+                <tr key={name}>
+                  <td className={classes}>
+                    <Tooltip content="Edit User">
+                      <IconButton variant="text">
+                        <PencilIcon className="h-4 w-4 m-1" />
+                      </IconButton>
+                    </Tooltip>
+                    <Tooltip content="Delete User">
+                      <IconButton variant="text">
+                        <TrashIcon className="h-4 w-4 m-1" />
+                      </IconButton>
+                    </Tooltip>
+                  </td>
+                  <td className={classes}>
+                    <Typography
+                      variant="small"
+                      color="blue-gray"
+                      className="font-normal"
+                    >
+                      {username}
+                    </Typography>
+                  </td>
+                  <td className={classes}>
+                    <Typography
+                      variant="small"
+                      color="blue-gray"
+                      className="font-normal"
+                    >
+                      {email}
+                    </Typography>
+                  </td>
+                  <td className={classes}>
+                    <Typography
+                      variant="small"
+                      color="blue-gray"
+                      className="font-normal"
+                    >
+                      {id}
+                    </Typography>
+                  </td>
+                  <td className={classes}>
+                    <Typography
+                      variant="small"
+                      color="blue-gray"
+                      className="font-normal"
+                    >
+                      {surname}
+                    </Typography>
+                  </td>
+                  <td className={classes}>
+                    <Typography
+                      variant="small"
+                      color="blue-gray"
+                      className="font-normal"
+                    >
+                      {name}
+                    </Typography>
+                  </td>
+                </tr>
+              );
+            })}
           </tbody>
         </table>
       </CardBody>
