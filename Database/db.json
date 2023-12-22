@@ -1,34 +1,22 @@
 {
   "users": [
     {
-      "id": 1271668683,
-      "name": "dfdsfdf",
-      "surname": "fdsfdf",
-      "melicode": "",
-      "username": "dsdsdsdd",
-      "email": "fdsfd@gmail.com",
-      "password": "kJ7^gggg",
-      "repeatPassword": "kJ7^gggg"
-    },
-    {
       "id": 1271668682,
       "name": "dfdsfdf",
-      "surname": "fdsfdf",
-      "melicode": "",
+      "surname": "fdsfdfgg",
       "username": "dsdsdsdd",
       "email": "fdsfd@gmail.com",
       "password": "kJ7^gggg",
       "repeatPassword": "kJ7^gggg"
     },
     {
-      "id": 1252365688,
-      "name": "ggdfgf",
-      "surname": "dfgfdg",
-      "melicode": "",
-      "username": "kJ7^hjkldd",
-      "email": "gfdgf@gmail.com",
-      "password": "kJ7^hjkl",
-      "repeatPassword": "kJ7^hjkl"
+      "id": 1272569855,
+      "name": "hghfgh",
+      "surname": "hfghfghgfh",
+      "username": "kJ7^hhhh",
+      "email": "fdsfhhhd@gmail.com",
+      "password": "kJ7^hhhh",
+      "repeatPassword": "kJ7^hhhh"
     }
   ]
 }

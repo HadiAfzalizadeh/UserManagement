@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import Modal from 'react-modal';
 import React, { useState } from 'react';
 import UsersGrid from './components/usersGrid';
+import Filter from './components/filter';
 import AddAndEditUserModal from './components/addAndEditUserModal';
 
 const modalStyles = {
@@ -32,6 +33,8 @@ function App() {
       >
         <AddAndEditUserModal />
       </Modal>
+
+      <Filter />
 
       <UsersGrid />
     </>

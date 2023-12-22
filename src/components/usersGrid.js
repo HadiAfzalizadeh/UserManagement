@@ -33,29 +33,11 @@ function UsersGrid() {
   let dispatch = useDispatch();
   return (
     <Card className="h-full w-full">
-      <CardHeader floated={false} shadow={false} className="rounded-none">
-        <div className="mb-4 flex flex-col justify-between gap-8 md:flex-row md:items-center">
-          <div className="flex w-full shrink-0 gap-2 md:w-max">
-            <div className="w-full md:w-72">
-              <Input
-                dir="rtl"
-                // label="Search"
-                // icon={<MagnifyingGlassIcon className="h-5 w-5" />}
-              />
-              <div class="md:col-span-5 text-right">
-                <div class="inline-flex items-end">
-                  <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                    جست و جو
-                  </button>
-                </div>
-              </div>
-            </div>
-            <Button className="flex items-center gap-3" size="sm">
-              <ArrowDownTrayIcon strokeWidth={2} className="h-4 w-4" /> Download
-            </Button>
-          </div>
-        </div>
-      </CardHeader>
+      <CardHeader
+        floated={false}
+        shadow={false}
+        className="rounded-none"
+      ></CardHeader>
       <CardBody className="overflow-scroll px-0">
         <table className="w-full min-w-max table-auto text-left">
           <thead>

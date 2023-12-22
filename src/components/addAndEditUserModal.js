@@ -31,128 +31,125 @@ function AddAndEditUserModal() {
   let dispatch = useDispatch();
   const addEditType = useSelector((state) => state.addEditType);
   return (
-    <>
-      <Formik
-        enableReinitialize={true}
-        initialValues={useSelector((state) => state.editableUser)}
-        validationSchema={addUserSchema}
-        onSubmit={async (values) => {
-          if (addEditType === 'add') {
-            await UserService.addUser(values);
-            let action = {
-              type: 'add',
-              data: await UserService.getUsers(),
-            };
-            dispatch(action);
-          } else {
-            await UserService.editUser(values);
-            let action = {
-              type: 'edit',
-              data: await UserService.getUsers(),
-            };
-            dispatch(action);
-          }
-        }}
-      >
-        {({ isSubmitting }) => (
-          <Form>
-            <div class="container max-w-screen-lg mx-auto">
-              <div>
-                <div class="bg-white rounded shadow-lg p-4 px-4 md:p-8 mb-6">
-                  <div class="grid gap-4 gap-y-2 text-sm grid-cols-1 lg:grid-cols-3">
-                    <div class="text-gray-600">
-                      <p class="font-medium text-lg">Personal Details</p>
-                      <p>Please fill out all the fields.</p>
-                    </div>
+    <Formik
+      enableReinitialize={true}
+      initialValues={useSelector((state) => state.editableUser)}
+      validationSchema={addUserSchema}
+      onSubmit={async (values) => {
+        if (addEditType === 'add') {
+          await UserService.addUser(values);
+          let action = {
+            type: 'add',
+            data: await UserService.getUsers(),
+          };
+          dispatch(action);
+        } else {
+          await UserService.editUser(values);
+          let action = {
+            type: 'edit',
+            data: await UserService.getUsers(),
+          };
+          dispatch(action);
+        }
+      }}
+    >
+      {({ isSubmitting }) => (
+        <Form>
+          <div class="container max-w-screen-lg mx-auto">
+            <div>
+              <div class="bg-white rounded shadow-lg p-4 px-4 md:p-8 mb-6">
+                <div class="grid gap-4 gap-y-2 text-sm grid-cols-1 lg:grid-cols-3">
+                  <div class="text-gray-600">
+                    <p class="font-medium text-lg">Personal Details</p>
+                    <p>Please fill out all the fields.</p>
+                  </div>
 
-                    <div class="lg:col-span-2">
-                      <div class="grid gap-4 gap-y-2 text-sm grid-cols-1 md:grid-cols-5">
-                        <div class="md:col-span-5">
-                          <label for="name">نام</label>
-                          <Field
-                            type="text"
-                            name="name"
-                            class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
-                          />
-                          <ErrorMessage name="name" component="div" />
-                        </div>
+                  <div class="lg:col-span-2">
+                    <div class="grid gap-4 gap-y-2 text-sm grid-cols-1 md:grid-cols-5">
+                      <div class="md:col-span-5">
+                        <label for="name">نام</label>
+                        <Field
+                          type="text"
+                          name="name"
+                          class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
+                        />
+                        <ErrorMessage name="name" component="div" />
+                      </div>
 
-                        <div class="md:col-span-5">
-                          <label for="surname">نام خانوادگی</label>
-                          <Field
-                            type="text"
-                            name="surname"
-                            class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
-                          />
-                          <ErrorMessage name="surname" component="div" />
-                        </div>
+                      <div class="md:col-span-5">
+                        <label for="surname">نام خانوادگی</label>
+                        <Field
+                          type="text"
+                          name="surname"
+                          class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
+                        />
+                        <ErrorMessage name="surname" component="div" />
+                      </div>
 
-                        <div class="md:col-span-5">
-                          <label for="id">کد ملی</label>
-                          <Field
-                            type="number"
-                            name="id"
-                            disabled={addEditType === 'add' ? false : true}
-                            class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
-                          />
-                          <ErrorMessage name="id" component="div" />
-                        </div>
+                      <div class="md:col-span-5">
+                        <label for="id">کد ملی</label>
+                        <Field
+                          type="number"
+                          name="id"
+                          disabled={addEditType === 'add' ? false : true}
+                          class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
+                        />
+                        <ErrorMessage name="id" component="div" />
+                      </div>
 
-                        <div class="md:col-span-5">
-                          <label for="email">آدرس ایمیل</label>
-                          <Field
-                            type="email"
-                            name="email"
-                            class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
-                            placeholder="email@domain.com"
-                          />
-                          <ErrorMessage name="email" component="div" />
-                        </div>
+                      <div class="md:col-span-5">
+                        <label for="email">آدرس ایمیل</label>
+                        <Field
+                          type="email"
+                          name="email"
+                          class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
+                          placeholder="email@domain.com"
+                        />
+                        <ErrorMessage name="email" component="div" />
+                      </div>
 
-                        <div class="md:col-span-5">
-                          <label for="username">نام کاربری</label>
-                          <Field
-                            type="text"
-                            name="username"
-                            id="username"
-                            class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
-                          />
-                          <ErrorMessage name="username" component="div" />
-                        </div>
+                      <div class="md:col-span-5">
+                        <label for="username">نام کاربری</label>
+                        <Field
+                          type="text"
+                          name="username"
+                          class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
+                        />
+                        <ErrorMessage name="username" component="div" />
+                      </div>
 
-                        <div class="md:col-span-5">
-                          <label for="password">رمز عبور</label>
-                          <Field
-                            type="password"
-                            name="password"
-                            class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
-                          />
-                          <ErrorMessage name="password" component="div" />
-                        </div>
+                      <div class="md:col-span-5">
+                        <label for="password">رمز عبور</label>
+                        <Field
+                          type="password"
+                          name="password"
+                          class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
+                        />
+                        <ErrorMessage name="password" component="div" />
+                      </div>
 
-                        <div class="md:col-span-5">
-                          <label for="repeatPassword">تکرار رمز عبور</label>
-                          <Field
-                            type="password"
-                            name="repeatPassword"
-                            class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
-                          />
-                          <ErrorMessage name="repeatPassword" component="div" />
-                        </div>
+                      <div class="md:col-span-5">
+                        <label for="repeatPassword">تکرار رمز عبور</label>
+                        <Field
+                          type="password"
+                          name="repeatPassword"
+                          class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
+                        />
+                        <ErrorMessage name="repeatPassword" component="div" />
+                      </div>
 
-                        <div class="md:col-span-5 text-right">
-                          <div class="inline-flex items-end">
-                            <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
-                              انصراف
-                            </button>
-                            <button
-                              type="submit"
-                              disabled={isSubmitting}
-                              class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                            >
-                              تایید
-                            </button>
-                          </div>
+                      <div class="md:col-span-5 text-right">
+                        <div class="inline-flex items-end">
+                          <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+                            انصراف
+                          </button>
+                          <button
+                            type="submit"
+                            disabled={isSubmitting}
+                            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                          >
+                            تایید
+                          </button>
                         </div>
                       </div>
                     </div>
@@ -160,10 +157,10 @@ function AddAndEditUserModal() {
                 </div>
               </div>
             </div>
-          </Form>
-        )}
-      </Formik>
-    </>
+          </div>
+        </Form>
+      )}
+    </Formik>
   );
 }
 

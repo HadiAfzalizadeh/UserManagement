@@ -1,7 +1,7 @@
 import { createStore } from 'redux';
 import UserService from './userService';
 
-let defaultUsers = {
+let defaultState = {
   users: await UserService.getUsers(),
   editableUser: {
     id: null,
@@ -16,7 +16,7 @@ let defaultUsers = {
   addEditType: 'add',
 };
 
-const usersReducer = (state = defaultUsers, action) => {
+const usersReducer = (state = defaultState, action) => {
   switch (action.type) {
     case 'add':
       return {
@@ -52,6 +52,12 @@ const usersReducer = (state = defaultUsers, action) => {
           password: '',
           repeatPassword: '',
         },
+      };
+    case 'filter':
+      return {
+        ...state,
+        users: [],
+        users: action.data,
       };
     case 'loadAdd':
       return {
